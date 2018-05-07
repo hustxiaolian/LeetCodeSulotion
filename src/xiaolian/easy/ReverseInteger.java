@@ -54,7 +54,7 @@ public class ReverseInteger {
 	 */
 	public static int reverse(int x) {
 		int result = 0;
-		int signal = x < 0 ? -1 : 1;
+		//int signal = x < 0 ? -1 : 1;
 		int tailBitNum;
 		int lastResult = 0;
 		
