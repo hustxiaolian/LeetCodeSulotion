@@ -19,7 +19,7 @@ import java.util.HashMap;
  * 
  * 2.使用哈希表完成线性的测试和检索。时间复杂度：线性，空间复杂度：二次方
  * 
- * 
+ * @version 2.0 review了一下，基本是思路已经是最优化了。
  */
 public class TwoSum {
 
