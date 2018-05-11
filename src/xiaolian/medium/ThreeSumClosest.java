@@ -32,7 +32,7 @@ public class ThreeSumClosest {
 	 * the idea is:排序后，设置三个指针，第一个i从左到右遍历，第二个j = i+1, 第三个k = n-1.后面两个向中间移动。
 	 * 判断这三个指针指向的数字相加的和 - target 是否比上次result更小。
 	 * 
-	 * bug 1 result初始化为Integer.max_value，使得如果target如果为负数，直接溢出了
+	 * bug 1 result初始化为Integer.max_value，使得如果target如果为负数，直接溢出了。改成初始化为输入数组开头三数字的和。
 	 * 
 	 * @param nums
 	 * @param target
