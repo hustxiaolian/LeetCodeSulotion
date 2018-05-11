@@ -1,6 +1,7 @@
 package xiaolian.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,9 +26,68 @@ A solution set is:
 
 */
 public class ThreeSum {
-	public static List<List<Integer>> threeSum(int[] nums){
+	public static void main(String[] args) {
+		System.out.println(threeSum(new int[] {-1,0,1,2,-1,-4}));
+	}
+	
+	/*第二种思路*/
+	
+	/**
+	 * 第二种思路在于，先排序，利用有序性性再搞事。
+	 * 根据有序性，可知，如果我们输入的数组具有一般性，即既有正值也有负值，排序后负值在前，正值在后。
+	 * 为了满足题目条件，我们从先选定三元组中的一个数字，从左到右
+	 * 1. 如果这个数字大于0，我们直接退出循环。根据有序性，如果第一个数字比0大，那么后面所有的数字都是大于0的，肯定不存在符合条件的组合。
+	 * 2. 如果最小值大于0，直接返回。
+	 * 3. 如果最大值小于0，直接返回。
+	 * 4. 其他情况下，我们选定i后，令j = i + 1,k = n - 1.i,j向中间移动，直到找到合适的数字组合。
+	 * 		如果有重复数组，我们应该加以判断然后跳过，该种方法的一个重大好处是，有序性十分有利于重复结果的判断和跳过。
+	 * 5. 当然如果输入数组少于三个数字，那么直接返回空集。
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public static List<List<Integer>> threeSum(int[] nums) {
+		List<List<Integer>> result = new LinkedList<>();
 		
-		return null;
+		if(nums.length < 3) return result;//情况5
+		
+		int arrLength = nums.length;
+		int tailNum = arrLength - 1;
+		int i,j,k,sum,numi;
+		//int num1, num2, num3;
+		Arrays.sort(nums);
+		
+		if(nums[0] > 0 || nums[tailNum] < 0) return result;//情况2和3
+		
+		for(i = 0; i < arrLength - 2;) {//保证后面至少还有两个数
+			numi = nums[i];
+			if(numi > 0) break;//情况1
+			j = i + 1;
+			k = tailNum;
+			while(j < k) {
+				sum = numi + nums[j] + nums[k];
+				if(sum == 0) {
+					result.add(Arrays.asList(numi, nums[j], nums[k]));//这个静态方法第一次使用，学习了。
+					while(nums[j] == nums[++j] && j < k);
+					while(nums[k] == nums[--k] && j < k);
+				}else if(sum < 0) {
+					/*
+					 * 这里，万万没想到，小小的改动，或者是或看起来不那么合适的改动，确实把性能提升了10%左右。
+					 * 究其原因，难道是循环开销。仔细想想，如果是输入数组不是特别大的时候，反而相当于每轮循环中，做了多余的操作和判断。
+					 * 这个过程相当于每轮都额外做了两次内存调用，一次自增，一次判断。
+					 * 这是一个浅薄的分析，要确认具体的原因还需要查看具体的汇编代码来分析。
+					 * */
+					//while(nums[j] == nums[++j] && j < k);//跳过重复数字但是，保证不能越界。
+					++j;
+				}else if(sum > 0) {
+					//while(nums[k] == nums[--k] && j < k);
+					--k;
+				}
+			}
+			while(nums[i] == nums[++i] && i < arrLength - 2);//跳过重复数字，但是保证别越界
+		}
+		
+		return result;
 	}
 }
 
@@ -54,7 +114,7 @@ class OldThreeSum {
 
 	public static void main(String[] args) {
 		int[] arr = {-5,0,-2,3,-2,1,1,3,0,-5,3,3,0,-1};
-		List<List<Integer>> res = threeSum(arr);
+		List<List<Integer>> res = threeSum1(arr);
 		System.out.println(res);
 	}
 	
@@ -63,7 +123,7 @@ class OldThreeSum {
 	 * @param nums
 	 * @return
 	 */
-	public static List<List<Integer>> threeSum(int[] nums){
+	public static List<List<Integer>> threeSum1(int[] nums){
 		//初始化变量,并且判断特殊输入
 		List<List<Integer>> result = new LinkedList<List<Integer>>();
 		if(nums == null || nums.length < 3) {
@@ -214,6 +274,9 @@ class OldThreeSum {
 		}
 		return true;
 	}
+	
+	
+	
 }
 
 
