@@ -12,7 +12,7 @@ public class LongestPalindromicSubstring {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String s = "ababababababababababababababababababab"
+		String s1 = "ababababababababababababababababababab"
 				+ "ababababababababababababababababababababababa"
 				+ "bababababababababababababababababababababababababab"
 				+ "ababababababababababababababababababababababababababababababababababababababab"
@@ -25,6 +25,7 @@ public class LongestPalindromicSubstring {
 				+ "bababababababababababababababababababababababababababababababababababababababababababababab"
 				+ "ababababababababababababababababababababababababababababababababababababababababababababababab"
 				+ "ababababababababababababababababababababababababababababababababababababa";
+		String s = "babad";
 		/*
 		for(int i = 0;i < s.length();++i) {
 			System.out.println(s.charAt(i));
@@ -33,7 +34,7 @@ public class LongestPalindromicSubstring {
 		System.out.println(s.substring(0,2));
 		*/
 		
-		System.out.println(longestPalindromicSubstring(s).length());
+		System.out.println(longestPalindromicSubstring2(s).length());
 		System.out.println(s.length());
 		System.out.println(s.substring(0, s.length()));
 	}
@@ -73,10 +74,12 @@ public class LongestPalindromicSubstring {
 	 * 				或者说ababababab这样高度重复，能形成很多回文字串的那么我的算法会对每个可能符文都判断，相比于暴力三次方的方法
 	 * 				节省下来的时间比较少。
 	 * 空间复杂度：线性
+	 * 
+	 * test1: 118ms, beats(26.03%)(笑，雾，ε=ε=ε=┏(゜ロ゜;)┛)
 	 * @param s
 	 * @return
 	 */
-	public static String longestPalindromicSubstring(String s) {
+	public static String longestPalindromicSubstring1(String s) {
 		//初始化各变量
 		//String subStr = s.substring(0, 1);
 		String result = s.substring(0, 1);
@@ -163,5 +166,36 @@ public class LongestPalindromicSubstring {
 		}
 		//之后，从这个第一个重复的地方继续开始，循环。
 		return result;
+	}
+	
+	/**
+	 * 这次是review整理下过往做完的20道题，并且对它们进行分类，以便于以后复习，整理，提高。
+	 * 这次的思路就是solution那个掉渣天的思路。
+	 * 具体为：
+	 * 1. 指定一个字母引用，来遍历整个字符串的每个字母。
+	 * 2. 针对每次指定的字母，我们以它为中心向两边扩展。
+	 * 		(注意会出现两种情况，一种以该字母的中心对称，一种是包含该字母的镜像对称)
+	 * @param s
+	 * @return
+	 */
+	public static String longestPalindromicSubstring2(String s) {
+		String result = "";
+		int n = s.length();
+		
+		for(int i = 0;i < n - 1; ++i) {
+			String result1 = judge(s, i, i + 1, n);
+			String result2 = judge(s, i - 1, i + 1, n);
+			String max = result1.length() > result2.length() ? result1 : result2;
+			result = max.length() > result.length() ? max : result;
+		}
+		
+		return result;
+	}
+	
+	private static String judge(String s, int left, int right, int length) {
+		while(left > 0 && right < length && s.charAt(left--) == s.charAt(right++));
+		left = left < 0? 0: left;
+		right = right > length ? length : right;
+		return s.substring(left, right);
 	}
 }
