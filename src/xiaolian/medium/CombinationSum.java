@@ -55,11 +55,54 @@ public class CombinationSum {
 	 * 这道题倒是一道挺不错递归的题目。而且可以优化的地方非常多。
 	 * 比如说怎么利用除法去加速递归过程。
 	 * 
+	 * test2:18ms, 从discuss中偷师，学习了如何用更加简洁优雅的递归算法。
+	 * test3:15ms, 学习了，以后尽量使用ArrayList，运行速度上确实就是要快一些。ε=ε=ε=┏(゜ロ゜;)┛
+	 * 
 	 * @param candidates
 	 * @param target
 	 * @return
 	 */
-    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+	public static List<List<Integer>> combinationSum12(int[] candidates, int target){
+		List<List<Integer>> result = new ArrayList<>();
+		ArrayList<Integer> cache = new ArrayList<>();
+		int n = candidates.length;
+		Arrays.sort(candidates);	
+		searchSum3(candidates, 0, target, cache, result, n);
+		return result;
+	}
+	
+	/*
+    private static void searchSum2(int[] candidates, int curr, int target, LinkedList<Integer> cache,
+			List<List<Integer>> result) {
+		if(target == 0) {
+			result.add(new ArrayList<>(cache));
+			return;
+		}
+		if(target < 0)	return;
+		for(int i = curr;i >= 0; --i) {
+			cache.addLast(candidates[i]);
+			searchSum2(candidates, i, target - candidates[i], cache, result);
+			cache.removeLast();
+		}
+	}
+    */
+    private static void searchSum3(int[] candidates, int curr, int target, ArrayList<Integer> cache,
+			List<List<Integer>> result, int n) {
+		if(target == 0) {
+			result.add(new ArrayList<>(cache));
+			return;
+		}
+		if(target < 0)	return;
+		for(int i = curr;i < candidates.length; ++i) {
+			if(target < candidates[i]) break;
+			cache.add(candidates[i]);
+			searchSum3(candidates, i, target - candidates[i], cache, result, n);
+			cache.remove(cache.size() - 1);
+		}
+	}
+    
+
+	public static List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         LinkedList<Integer> cache = new LinkedList<>();
         int n = candidates.length;
@@ -68,23 +111,28 @@ public class CombinationSum {
         
         for(int i = 0; i < n;++i) {
         	int tempSum = target - candidates[i];
+        	//只有一个数字就行，那么前面也就是不需要看了
         	if(tempSum == 0) {
         		List<Integer> oneAns = new ArrayList<>();
         		oneAns.add(candidates[i]);
         		result.add(oneAns);
         	}
+        	//如果当前不够target，前面才来帮帮忙，为了避免重复必须保证当前至少有一个，动态规划思想
         	else if(tempSum > 0) {
         		cache.add(candidates[i]);
         		if(tempSum > min) {
                 	searchSum(candidates, i, tempSum, cache, result);
         		}
+        		//两个数就足够了，算是一个优化吧。
         		else if(tempSum == min) {
         			cache.add(min);
             		result.add(new ArrayList<>(cache));
         		}
+        		//如果算出来小于最小值，那就不可能有，不用费心了。
         		cache.clear();
         	}
         	else {
+        		//如果小于0，说明后面的数组都大于target，不用算了，直接退出。
         		break;
         	}
         }
@@ -116,7 +164,7 @@ public class CombinationSum {
     			cache.addFirst(nums[i]);
     			result.add(new ArrayList<>(cache));
     		}
-    		else {//太小了。没法找到。
+    		else {//太小了。没法找到,尝试下一个更小的数字
     			continue;
     		}
     		cache.removeFirst();
