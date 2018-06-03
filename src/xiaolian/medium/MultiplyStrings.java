@@ -58,7 +58,7 @@ public class MultiplyStrings {
         int length2 = num2.length();
         if(length1 == 1 && num1.charAt(0) == '0') return "0";
         
-        //初始化一个足够大的数组，用于储存结果。首先把num2放入
+        //初始化一个足够大的数组，用于储存结果。
         int[] resArr = new int[length1 + length2];
         int reslength = resArr.length;
         int i = 0, j = 0, flag = 0;
