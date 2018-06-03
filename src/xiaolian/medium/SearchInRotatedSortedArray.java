@@ -74,6 +74,7 @@ If nums[mid] and target are "on the same side" of nums[0], we just take nums[mid
         int left = 0, right = nums.length;
         while(left < right) {
         	int mid = (left + right) / 2;
+        	//关键核心在就在这里的判断。
         	double tempMid;
         	if((nums[mid] < nums[0]) == (target < nums[0])) {
         		tempMid = nums[mid];
