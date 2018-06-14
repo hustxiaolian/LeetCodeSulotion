@@ -1,4 +1,4 @@
-package xiaolian.easy;
+package com.xiaolian.leetcode.easy;
 
 import java.util.Arrays;
 
