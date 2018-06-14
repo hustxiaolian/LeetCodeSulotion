@@ -3,6 +3,8 @@ package xiaolian.easy;
 
 import java.util.TreeSet;
 
+import xiaolian.medium.RemoveDuplicatesfromSortedArrayII;
+
 public class RemoveDuplicatesFromSortedArray {
 
 	public static void main(String[] args) {
@@ -53,5 +55,23 @@ public class RemoveDuplicatesFromSortedArray {
 		}
 		return j;
 	} 
+	
+	/**
+	 * 思路：
+	 * {@link RemoveDuplicatesfromSortedArrayII}
+	 * 这种思路也真是足够简单粗暴的。
+	 * 基本上完全一样，
+	 * @param nums
+	 * @return
+	 */
+    public static int removeDuplicates3(int[] nums) {
+    	int n = nums.length;
+        int i = 1,j = 1;
+        for(;i < n;++i) {
+        	if(nums[i] > nums[j - 1])
+        		nums[j++] = nums[i];
+        }
+        return j;
+    }
 
 }
