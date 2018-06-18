@@ -47,8 +47,7 @@ public class Subsets {
 			cache[curr] = nums[i];
 			addOneAns(result, cache, curr + 1);
 			searchSub(result, nums, n, cache, curr + 1, i + 1);
-		}
-		
+		}	
 	}
 	
 	/**
