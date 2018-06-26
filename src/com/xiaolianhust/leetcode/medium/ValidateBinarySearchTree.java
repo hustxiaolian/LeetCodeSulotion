@@ -1,4 +1,4 @@
-package com.xiaolianhust.leetcode.hard;
+package com.xiaolianhust.leetcode.medium;
 
 import com.xiaolianhust.leetcode.medium.UniqueBinarySearchTreesII.TreeNode;
 
