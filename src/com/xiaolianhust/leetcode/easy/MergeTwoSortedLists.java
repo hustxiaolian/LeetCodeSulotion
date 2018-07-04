@@ -14,9 +14,9 @@ Output: 1->1->2->3->4->4
 public class MergeTwoSortedLists {
 	
 	public class ListNode {
-		int val;
-		ListNode next;
-		ListNode(int x) { val = x; }
+		public int val;
+		public ListNode next;
+		public ListNode(int x) { val = x; }
 	}
 	
 
