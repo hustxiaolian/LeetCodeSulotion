@@ -7,15 +7,15 @@ import com.xiaolianhust.leetcode.medium.UniqueBinarySearchTreesII.TreeNode;
 
 public class BinaryTreePostorderTraversal {
 	/**
+	 * 这道题。。。
+	 * 我实在没啥好说，这道hard有点。。。
 	 * 
 	 * @param root
 	 * @return
 	 */
 	public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        
         helper(root, result);
-        
         return result;
     }
 	
@@ -24,7 +24,7 @@ public class BinaryTreePostorderTraversal {
 	 * @param root
 	 * @param result
 	 */
-	private void helper(TreeNode t, List<Integer> result) {
+	private final void helper(TreeNode t, List<Integer> result) {
 		if(t == null)
 			return;
 		
