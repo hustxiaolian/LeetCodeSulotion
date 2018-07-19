@@ -13,7 +13,7 @@ Output: 1->1->2->3->4->4
  */
 public class MergeTwoSortedLists {
 	
-	public class ListNode {
+	public static class ListNode {
 		public int val;
 		public ListNode next;
 		public ListNode(int x) { val = x; }

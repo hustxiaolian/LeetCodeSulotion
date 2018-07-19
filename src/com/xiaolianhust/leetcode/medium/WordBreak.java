@@ -10,9 +10,9 @@ public class WordBreak {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(wordBreak2("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", 
-				new ArrayList<>(Arrays.asList("a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"))));
-		System.out.println(wordBreak2("catsandog", 
+//		System.out.println(wordBreak2("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", 
+//				new ArrayList<>(Arrays.asList("a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"))));
+		System.out.println(wordBreakReview("catsandog", 
 				new ArrayList<>(Arrays.asList("cats", "dog", "sand", "and", "cat"))));
 	}
 	
@@ -28,10 +28,38 @@ public class WordBreak {
 	 * 
 	 * 准备看下discuss大神的套路。我选择死亡。
 	 * 
+	 * 总结这道题的dp思路：
+	 * 1.假设基准情形。假设我直到f(0...i-1) = true或者false,包括前面的我都知道。
+	 * 2.考虑现在的情形
+	 * 包含这个字母的所有可能的单词(a..i)，检索它是否在wordList中，如果在它的f(0..a-1)必须是true才行。
+	 * 如果两个条件都满足，表示到位置i也可以的。f(0...i) = true,不然就维持false
+	 * 
+	 * 
+	 * 
 	 * @param s
 	 * @param wordDict
 	 * @return
 	 */
+	public static boolean wordBreakReview(String s, List<String> wordDict) {
+		if(s == null || wordDict.size() == 0) return false;
+		int n = s.length();
+		boolean[] dp = new boolean[n + 1];
+		dp[0] = true;
+		for(int i = 0;i < n;++i) {
+			for(int j = 0;j <= i;++j) {
+				String sub = s.substring(j, i + 1);
+				if(dp[j] && wordDict.contains(sub)) {
+					dp[i + 1] = true;
+					/*
+					 * 这道题的optimal structure体现在这里，dp[i]表示当前位置上截断，前面的部分是否能用wordList完全表示。
+					 * */
+					break;
+				}
+			}
+		}
+		return dp[n];
+	}
+	
 	public static boolean wordBreak(String s, List<String> wordDict) {
 		if(s.length() == 0)
 			return true;
@@ -76,5 +104,6 @@ public class WordBreak {
 		  
 		return dp[n - 1];
 	}
+
 	
 }

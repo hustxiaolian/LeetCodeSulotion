@@ -85,10 +85,13 @@ public class WildcardMatching {
 		boolean[][] dp = new boolean[sn + 1][pn + 1];
 		//基准情形1，都是为空了，即都刚好完成匹配，皆大欢喜
 		dp[sn][pn] = true;
+		/*
 		//基准情形2，当p已经匹配完成后，s没有匹配完的话都是false
 		//for(int i = 0;i < sn;++i)
 		//	dp[i][pn] = false;
 		//基准情形3，当s已经匹配完成后，如果p还不为空，后面的符号只能都是*
+		 *
+		 */
 		for(int j = pn - 1;j >= 0;--j) 
 			dp[sn][j] = dp[sn][j + 1] && p.charAt(j) == '*';
 		
