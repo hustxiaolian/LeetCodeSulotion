@@ -18,7 +18,8 @@ public class ReverseBits {
 	 * 
 	 * test1:2ms, beasts 18.59%ε=ε=ε=┏(゜ロ゜;)┛
 	 * 
-	 * 
+	 * 前排的思路：
+	 * 重建一个呗，而我的想法是在原有的基础上改造。
 	 * 
 	 * @param n
 	 * @return
@@ -36,4 +37,15 @@ public class ReverseBits {
         }
         return n;
     }
+	
+	public static int reverseBits2(int n) {
+		long result = 0;
+		for(int i = 0;i < 32;++i) {
+			result += n & 1;
+			n = n >>> 1;
+        	result = result << 1;
+		}
+		result = result >>> 1;
+		return (int)result;
+	}
 }
