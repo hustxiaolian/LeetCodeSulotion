@@ -4,7 +4,7 @@ public class HouseRobber {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(robByDP(new int[] {2,17,9,3,10}));
+		System.out.println(robByDP2(new int[] {2,17,9,3,10}));
 	}
 	
 	/**
@@ -72,5 +72,23 @@ public class HouseRobber {
 		}
 		
 		return dp[n - 1];
+	}
+	
+	/**
+	 * 这种思路简直妙，其实实质上上面我那种的思路的简化版，但是这种简化真是巧妙。
+	 * 起码我没想出来。妙。美。
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public static int robByDP2(int[] nums) {
+		int rob = 0, notrob = 0;//rob表示如果抢了当前房屋后总的财富，相反，notrob表示不抢当前房屋，总的收益。
+		int n = nums.length;
+		for(int i = 0;i < n;++i) {
+			int currrob = nums[i] + notrob;//如果抢当前房屋，那么i-1的房屋就不能抢。
+			notrob = Math.max(notrob, rob);//如果不抢当前房屋，那么我们从i-1的抢或者不抢中取最大值。
+			rob = currrob;//将当前抢了计算值，赋值过来
+		}
+		return Math.max(rob, notrob);
 	}
 }
