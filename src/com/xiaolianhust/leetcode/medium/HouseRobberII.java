@@ -4,7 +4,7 @@ public class HouseRobberII {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(rob(new int[] {1,2,3,1}));
+		System.out.println(rob2(new int[] {1,2}));
 	}
 
 	/**
@@ -50,12 +50,15 @@ public class HouseRobberII {
 	 * 既然我们知道了rob第一种版本的解决方法，那么这次的环形街道。其实本质还是和前面一样。
 	 * 假设我们从第一个房子开始抢，那么最后一个房子，我们别碰，或者我们从第二个房子开始，那么最后一个房子就可以碰。
 	 * 仔细思考，可以发现，这两种方式可以囊括住所有的情况。妙。
+	 * 
+	 * test1: 3ms, beats 100%ε=ε=ε=┏(゜ロ゜;)┛
 	 * @param nums
 	 * @return
 	 */
 	public static int rob2(int[] nums) {
 		int n = nums.length;
-		if(n <= 2) return 0;
+		if(n == 0) return 0;
+		else if(n == 1) return nums[0];
 		return Math.max(robDP(nums, 0, n - 2), robDP(nums, 1, n - 1));
 	}
 
