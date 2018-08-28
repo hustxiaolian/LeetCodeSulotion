@@ -30,7 +30,7 @@ public class SearchInRotatedSortedArray {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		search(new int[] {12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 0);
+		System.out.println(search3(new int[] {2}, 2));;
 	}
 	
 	/**
@@ -109,6 +109,55 @@ If nums[mid] and target are "on the same side" of nums[0], we just take nums[mid
         		return mid;
         }
     	
+    	return -1;
+    }
+    
+    /**
+     * review.
+     * 为了更好的记住这道题的相关思路。前面的方法太具有特异性了。
+     * 换一种正常的思路。two-pass：
+     * 1. 找到rotate point
+     * 2. 选择一个半区进行正常的二分搜索。
+     * 
+     * test:14ms, beats 6.29%
+     * 
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int search3(int[] nums, int target) {
+    	int lo = 0, hi = nums.length - 1;
+    	if(hi < 0) return -1;
+    	//首先找到rotate point.这道题我是做过的
+    	if(nums[lo] > nums[hi]) {
+    		int right = nums[hi];
+    		while(lo < hi) {
+        		int mid = (lo + hi) / 2;
+        		if(nums[mid] > right)
+        			lo = mid + 1;
+        		else 
+        			hi = mid;
+        	}
+        	//由此，最后lo指向的就是rotate point,判断target在哪个半区，设置lo，hi
+        	if(target >= nums[0]) {
+        		hi = lo - 1;
+        		lo = 0;
+        	}
+        	else {
+        		hi = nums.length - 1;
+        	}
+    	}
+    	//正常的二分搜索。
+    	while(lo <= hi) {
+    		int mid = (lo + hi) / 2;
+    		int midVal = nums[mid];
+    		if(target > midVal)
+    			lo = mid + 1;
+    		else if(target < midVal)
+    			hi = mid - 1;
+    		else
+    			return mid;
+    	}
     	return -1;
     }
 
