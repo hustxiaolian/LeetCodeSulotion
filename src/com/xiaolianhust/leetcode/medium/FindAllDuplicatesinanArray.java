@@ -1,4 +1,4 @@
-package com.xiaolianhust.leetcode.easy;
+package com.xiaolianhust.leetcode.medium;
 
 import java.util.ArrayList;
 import java.util.List;
