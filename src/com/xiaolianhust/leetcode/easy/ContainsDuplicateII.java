@@ -33,7 +33,9 @@ public class ContainsDuplicateII {
 	
 	/**
 	 * 使用一个固定大小的set，相当于一个长度为k的窗口。
+	 * 
 	 * test2:11ms, beats 79.63%ε=ε=ε=┏(゜ロ゜;)┛
+	 * 
 	 * @param nums
 	 * @param k
 	 * @return
