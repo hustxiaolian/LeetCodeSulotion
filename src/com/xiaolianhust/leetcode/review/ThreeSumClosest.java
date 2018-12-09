@@ -62,7 +62,6 @@ public class ThreeSumClosest {
 					result = tempSum;
 				if(tempSum < target) 
 					++j;
-
 				else if(tempSum > target) 
 					--k;
 				else
